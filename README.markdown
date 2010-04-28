@@ -31,7 +31,22 @@ Then you can just use it like so:
           # raise an exception, yell at the user, whatever
         end
       end
-    end    
+    end
+
+    # Or you can keep everything on the user...
+    class User < ActiveRecord::Base
+      is_essential
+
+      def can?(action, object)
+        case action.to_sym
+        when :view
+          public_viewable = [Movie, Dvd, Post]
+          public_viewable.includ?(object.class)
+        else
+          super
+        end
+      end
+    end
 
 If you do not define any can_xxx_for? methods it will use the default:
 
