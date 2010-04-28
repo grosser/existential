@@ -17,11 +17,7 @@ Then you can just use it like so:
     class Post < ActiveRecord::Base
       def allows_edit_for?(user)
         # your crazy auth rules here, in the model where they belong
-        if self.user_id == user.id
-          true
-        else
-          false
-        end
+        self.user_id == user.id # this would also be the default, so ge more creative... 
       end
     end
 
@@ -36,6 +32,11 @@ Then you can just use it like so:
         end
       end
     end    
+
+If you do not define any can_xxx_for? methods it will use the default:
+
+ - can view, show for everyone
+ - can xxx for owner or admin?`s
 
 ### Thanks
 
